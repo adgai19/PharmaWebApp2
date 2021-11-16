@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.psl.miniProject.modal.Products;
+import com.psl.miniProject.modal.Ratings;
 import com.psl.miniProject.modal.Users;
 import com.psl.miniProject.repository.AdminProductsRepository;
+import com.psl.miniProject.repository.RatingsRepository;
 import com.psl.miniProject.repository.UsersRepository;
 
 
@@ -30,6 +32,9 @@ public class AdminProductsController {
 	@Autowired
 	private UsersRepository usersRepository;
 	
+	@Autowired
+	private RatingsRepository ratingsRepository;
+	
 	@GetMapping("/products")
 	public List<Products> getAllProducts(){
 		return (List<Products>) adminProductsRepository.findAll();
@@ -37,7 +42,17 @@ public class AdminProductsController {
 	
 	@PostMapping("/products")
 	public Products createProduct(@RequestBody Products product) {
-		return adminProductsRepository.save(product);
+		Products p = new Products();
+		Ratings rat = new Ratings(0,0,0,0,0);
+		p.setCategory(product.getCategory());
+		p.setName(product.getName());
+		p.setPrice(product.getPrice());
+		p.setStock(product.getStock());
+		p.setDescription(product.getDescription());
+		p.setRatings(rat);
+		Products pro = adminProductsRepository.save(p);
+		ratingsRepository.save(rat);
+		return pro;
 	}
 	
 	@GetMapping("/products/{id}")
