@@ -27,6 +27,8 @@ public class Products {
 	private int stock;
 	@Column(name="description")
 	private String description;
+	@Column(name="product_photo")
+	private String product_photo;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	private Ratings ratings;
@@ -44,6 +46,14 @@ public class Products {
 		this.stock = stock;
 		this.description = description;
 		this.ratings = ratings;
+	}
+	
+	public String getProduct_photo() {
+		return product_photo;
+	}
+
+	public void setProduct_photo(String product_photo) {
+		this.product_photo = product_photo;
 	}
 
 	public String getDescription() {
