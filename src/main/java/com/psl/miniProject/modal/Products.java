@@ -1,11 +1,15 @@
 package com.psl.miniProject.modal;
 
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name="products")
@@ -21,26 +25,41 @@ public class Products {
 	private int price;
 	@Column(name="stock")
 	private int stock;
-	@Column(name="star")
-	private int star;
+	@Column(name="description")
+	private String description;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+	private Ratings ratings;
+
 	public Products() {
 		
 	}
 	
-	public Products(String name, String category, int price, int stock, int star) {
+	public Products(int id, String name, String category, int price, int stock, String description, Ratings ratings) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.category = category;
 		this.price = price;
 		this.stock = stock;
-		this.star = star;
+		this.description = description;
+		this.ratings = ratings;
 	}
-	
-	public int getStar() {
-		return star;
+
+	public String getDescription() {
+		return description;
 	}
-	public void setStar(int star) {
-		this.star = star;
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Ratings getRatings() {
+		return ratings;
+	}
+
+	public void setRatings(Ratings ratings) {
+		this.ratings = ratings;
 	}
 	
 	public int getId() {

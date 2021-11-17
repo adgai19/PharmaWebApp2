@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.psl.miniProject.modal.Products;
 import com.psl.miniProject.repository.AdminProductsRepository;
+import com.psl.miniProject.modal.Ratings;
+import com.psl.miniProject.repository.RatingsRepository;
 
 
 @RestController
@@ -31,9 +33,27 @@ public class AdminProductsController {
         return (List<Products>) adminProductsRepository.findAll();
     }
 
+
+
+
+
+    @Autowired
+    private RatingsRepository ratingsRepository;
+
+
     @PostMapping("/products")
     public Products createProduct(@RequestBody Products product) {
-        return adminProductsRepository.save(product);
+        Products p = new Products();
+        Ratings rat = new Ratings(0,0,0,0,0);
+        p.setCategory(product.getCategory());
+        p.setName(product.getName());
+        p.setPrice(product.getPrice());
+        p.setStock(product.getStock());
+        p.setDescription(product.getDescription());
+        p.setRatings(rat);
+        Products pro = adminProductsRepository.save(p);
+        ratingsRepository.save(rat);
+        return pro;
     }
 
     @GetMapping("/products/{id}")
@@ -66,21 +86,6 @@ public class AdminProductsController {
         return ResponseEntity.ok(map);
     }
 
-    // @GetMapping("/users")
-    // public ResponseEntity<List<Users>> getAllUsers(){
-    // 	List<Users> users = (List<Users>) usersRepository.findAll();
-    // 	return ResponseEntity.ok(users);
-    // }
-
-    // @DeleteMapping("/users/{id}")
-    // public ResponseEntity<Map<String,Boolean>> deleteUsers(@PathVariable("id") int id) throws Exception{
-    // 	Users user = usersRepository.
-    // 			findById(id).orElseThrow(() -> new Exception("User not found with ID: "+id));
-    // 	usersRepository.delete(user);
-    // 	Map<String,Boolean> map = new HashMap<>();
-    // 	map.put("deleted",Boolean.TRUE);
-    // 	return ResponseEntity.ok(map);
-    // }
 
 
 
