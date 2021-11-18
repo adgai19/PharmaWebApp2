@@ -121,7 +121,7 @@ public class AdminProductsController {
     private <T> ResponseEntity idVerify(ResponseEntity<T> identity) {
         System.out.println("I am helper");
         String email=securityService.getUser().getEmail();
-        if (email.equals("gaitondeaditya@gmail.com")) {
+        if (email.endsWith("@admin.com")) {
             return identity;
         } else {
             return ResponseEntity.badRequest().body("You are not an admin so cannot access this ");
