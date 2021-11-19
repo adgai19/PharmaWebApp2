@@ -47,7 +47,8 @@ public class AdminProductsController {
     @Autowired
     private RatingsRepository ratingsRepository;
 
-    public static String uploadDir = System.getProperty("user.dir")+"/src/main/resources/static/imgs";
+
+    public static String uploadDir = System.getProperty("user.dir")+"/public/imgs";
 
     @Autowired
     private AdminProductsRepository adminProductsRepository;
